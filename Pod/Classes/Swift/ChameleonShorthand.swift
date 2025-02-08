@@ -103,12 +103,10 @@ private func flattenColor(_ color: UIColor) -> UIColor {
  - returns: A UIColor object using colorWithPattern.
  */
 public func GradientColor(_ gradientStyle: UIGradientStyle, frame: CGRect, colors: [UIColor]) -> UIColor {
-    // Vytvoření CAGradientLayer pro generování gradientu
     let gradientLayer = CAGradientLayer()
     gradientLayer.frame = frame
     gradientLayer.colors = colors.map { $0.cgColor }
     
-    // Pokud je potřeba změnit gradientStyle (například horizontální nebo vertikální)
     switch gradientStyle {
     case .horizontal:
         gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
@@ -116,11 +114,8 @@ public func GradientColor(_ gradientStyle: UIGradientStyle, frame: CGRect, color
     case .vertical:
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
-    default:
-        break
     }
     
-    // Vytvoření obrázku z gradientu
     UIGraphicsBeginImageContext(gradientLayer.bounds.size)
     gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
     let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -155,7 +150,8 @@ public func HexColor(_ hexString: String, _ alpha: CGFloat = 1.0) -> UIColor? {
  
  - returns: A flat UIColor object in the HSB colorspace.
  */
-//TO-DO: now on Swift 6 is really complicated -> waiting
+
+//TODO: now on Swift 6 is really complicated -> waiting
 
 //public func AverageColorFromImage(_ image: UIImage) -> UIColor {
 //    return UIColor(averageColorFrom: image)
@@ -163,7 +159,7 @@ public func HexColor(_ hexString: String, _ alpha: CGFloat = 1.0) -> UIColor? {
 
 // MARK: - Array Methods Shorthand
 
-// TODO Array Extension needed ;)
+// TODO: Array Extension needed ;)
 
 /**
  Generates and creates an array of 5 color objects in the HSB colorspace from the specified color.
@@ -184,16 +180,12 @@ public func ColorSchemeOf(_ colorSchemeType: ColorScheme, color: UIColor, isFlat
         colors = complementaryColors(for: color)
     case .triadic:
         colors = triadicColors(for: color)
-    default:
-        colors.append(color)
     }
     
     return isFlatScheme ? colors.map { flattenColor($0) } : colors
 }
 
-// Helper functions to generate specific color schemes
 private func analogousColors(for color: UIColor) -> [UIColor] {
-    // Dummy implementation for analogous colors
     return [color, color.withHueOffset(30), color.withHueOffset(-30)]
 }
 
@@ -205,7 +197,6 @@ private func triadicColors(for color: UIColor) -> [UIColor] {
     return [color, color.withHueOffset(120), color.withHueOffset(240)]
 }
 
-// Helper to adjust the hue of a color
 private extension UIColor {
     func withHueOffset(_ offset: CGFloat) -> UIColor {
         var hue: CGFloat = 0, saturation: CGFloat = 0, brightness: CGFloat = 0, alpha: CGFloat = 0
@@ -226,7 +217,9 @@ private extension UIColor {
  
  - returns: An array of 5 color objects in the HSB colorspace.
  */
-//TO-DO: now on Swift 6 is really complicated -> waiting
+
+//TODO: now on Swift 6 is really complicated -> waiting
+
 //public func ColorsFromImage(_ image: UIImage, withFlatScheme: Bool) -> [UIColor] {
 //    // TODO: Remove forced casting
 //    return NSArray(ofColorsFrom: image, withFlatScheme: withFlatScheme) as! [UIColor]
@@ -241,9 +234,9 @@ private extension UIColor {
  - returns: A flat UIColor object in the HSB colorspace.
  */
 public func RandomFlatColor() -> UIColor {
-    let hue: CGFloat = CGFloat.random(in: 0...1)  // Náhodná hodnota pro odstín
-    let saturation: CGFloat = 0.9                 // Vysoká saturace pro "flat" efekt
-    let brightness: CGFloat = 0.85                // Vysoký jas pro plochý vzhled
+    let hue: CGFloat = CGFloat.random(in: 0...1)
+    let saturation: CGFloat = 0.9
+    let brightness: CGFloat = 0.85
     return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
 }
 public func ClearColor() -> UIColor {
